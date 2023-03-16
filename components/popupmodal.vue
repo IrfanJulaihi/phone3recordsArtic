@@ -1,22 +1,15 @@
 <script lang="ts" setup>
-import useMyState from '~/composables/useUtils'
-const showModal=ref(false)
-const { state: myState } = useMyState()
-function submitForm() {
-  // Submit form logic goes here
-  // Show the modal
-  showModal.value = true
-}
+const PopUpModalSuccess=usePopUpModalSuccess();
 function closeModal() {
   // Hide the modal
-  showModal.value = false
+  PopUpModalSuccess.value = false
   // Reset the form data
 }
 </script>
 <template>
   <div>
   <!-- Pop-up modal -->
-  <div v-if="myState.popupmodalSuccess" class="fixed z-50 inset-0 overflow-y-auto">
+  <div v-if="PopUpModalSuccess" class="fixed z-50 inset-0 overflow-y-auto">
       <div class="flex items-center justify-center min-h-screen">
         <div class="fixed inset-0 bg-gray-500 bg-opacity-75"></div>
         <div class="bg-white rounded-lg p-6">

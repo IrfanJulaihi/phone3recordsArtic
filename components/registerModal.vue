@@ -1,11 +1,9 @@
 <script lang="ts" setup>
-import useMyState from '~/composables/useUtils'
 import axios from 'axios'
 import { useStore } from 'vuex'
-const store = useStore()
-
+const formModal = useModal();
+const PopUpModalSuccess = usePopUpModalSuccess();
 const baseurl = "http://localhost:1337"
-const { state: myState } = useMyState()
 const formData = {
   nama: '',
   emel: '',
@@ -13,45 +11,43 @@ const formData = {
   notelefon: ''
 };
 async function onSubmit() {
-  myState.popupmodalSuccess = true
   const data = {
     name: formData.nama,
     emel: formData.emel,
     unit: formData.unit,
     phoneNumber: formData.notelefon
   }
-  // const response = await axios.post(baseurl + '/api/auth/local',
-  //   {
-  //     "identifier": "irfan",
-  //     "password": "Vuenuxt123"
-  //   })
-  //   .then(function (response) {
-  //     // console.log('response.data.jwt :>> ', response.data);
-  //     const token = response.data.jwt
-  //     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-  //     axios.defaults.headers.common['Content-Type'] = 'application/json'
-  //     console.log(formData);
-  //     axios.post(baseurl + '/api/contacts', {
-  //     data
-  //     })
-  //       .then(function (response) {
-  //         console.log(response);
-  //         myState.modal=false
-  //       })
-  //       .catch(error => {
-  //         console.log(error)
-  //       })
-  //   })
-  //   .catch(error => {
-  //     console.log(error)
-  //   })
+  const response = await axios.post(baseurl + '/api/auth/local',
+    {
+      "identifier": "irfan",
+      "password": "Vuenuxt123"
+    })
+    .then(function (response) {
+      // console.log('response.data.jwt :>> ', response.data);
+      const token = response.data.jwt
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+      axios.defaults.headers.common['Content-Type'] = 'application/json'
+      console.log(formData);
+      axios.post(baseurl + '/api/contacts', {
+        data
+      })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    })
+    .catch(error => {
+      console.log(error)
+    })
 }
 </script>
 <template>
   <div>
+    {{ formModal }}
     <popupmodal />
-    <div class="flex items-center justify-center min-h-screen fixed inset-0 bg-gray-900 bg-opacity-70"
-      v-if="myState.modal">
+    <div class="flex items-center justify-center min-h-screen fixed inset-0 bg-gray-900 bg-opacity-70" v-if="formModal">
       <div class="bg-white p-6 rounded shadow-md max-w-sm w-full">
         <h2 class="text-2xl font-bold mb-4">Tambah profil baru</h2>
         <form @submit.prevent="onSubmit">
@@ -94,12 +90,12 @@ async function onSubmit() {
           <div class="flex justify-end">
             <button
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
-              type="submit" @change="onSubmit">
+              type="submit" @change="onSubmit" @click="PopUpModalSuccess = !PopUpModalSuccess">
               Register
             </button>
             <button
               class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button" @click="myState.modal = !myState.modal">
+              type="button" @click="formModal = !formModal">
               Cancel
             </button>
           </div>

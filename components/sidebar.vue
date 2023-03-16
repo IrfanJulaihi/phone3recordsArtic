@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import useMyState from '~/composables/useUtils'
 import { useStore } from 'vuex'
 const store = useStore()
-const { state: myState } = useMyState()
+const formModal=useModal();
 </script>
 <template>
   <aside class="hidden md:block md:w-1/10 bg-gray-800">
@@ -19,7 +18,7 @@ const { state: myState } = useMyState()
           <li class="px-4">
             <NuxtLink to="/register">
               <a href="#" class="text-gray-300 hover:text-white block px-2 py-2 rounded-md text-base font-medium"
-                @click="store.dispatch('modalHideShow')">
+                @click="formModal=!formModal">
                 Tambah profil
               </a>
             </NuxtLink>
