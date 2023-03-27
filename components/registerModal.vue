@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import axios from 'axios'
-import { useStore } from 'vuex'
 const formModal = useModal();
 const PopUpModalSuccess = usePopUpModalSuccess();
 const baseurl = "http://localhost:1337"
@@ -32,6 +31,8 @@ async function onSubmit() {
         data
       })
         .then(function (response) {
+          formModal.value=false
+          PopUpModalSuccess.value=true
           console.log(response);
         })
         .catch(error => {
@@ -45,8 +46,7 @@ async function onSubmit() {
 </script>
 <template>
   <div>
-    {{ formModal }}
-    <popupmodal />
+
     <div class="flex items-center justify-center min-h-screen fixed inset-0 bg-gray-900 bg-opacity-70" v-if="formModal">
       <div class="bg-white p-6 rounded shadow-md max-w-sm w-full">
         <h2 class="text-2xl font-bold mb-4">Tambah profil baru</h2>
@@ -90,7 +90,7 @@ async function onSubmit() {
           <div class="flex justify-end">
             <button
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
-              type="submit" @change="onSubmit" @click="PopUpModalSuccess = !PopUpModalSuccess">
+              type="submit" @change="onSubmit">
               Register
             </button>
             <button

@@ -80,7 +80,7 @@ function updateSearch() {
         <div class="grid-container">
           <div v-for="contacts in datalist" :key="contacts.id" class="grid-item">
             <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-              <img src="https://source.unsplash.com/random/800x600" alt="Card image" class="w-full h-64 object-cover">
+              <!-- <img src="https://source.unsplash.com/random/800x600" alt="Card image" class="w-full h-64 object-cover"> -->
               <div class="p-4">
                 <h2 class="text-xl font-medium text-gray-800 mb-2">{{ contacts.attributes.name }}</h2>
                 <p class="text-xl text-black-600">03-{{contacts.attributes.phoneNumber}}</p>
