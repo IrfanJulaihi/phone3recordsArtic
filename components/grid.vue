@@ -19,8 +19,9 @@ async function fetchData() {
           Authorization: `Bearer ${token}`
         }
       };
-      result = axios.get(baseurl + '/api/contacts', config)
+      result = axios.get(baseurl + '/api/contacts?populate=*', config)
         .then(function (response) {
+          console.log(response);
           datalist.value = response.data.data
           return {
             data: response.data.data,
@@ -79,7 +80,8 @@ function updateSearch() {
       <div>
         <div class="grid-container">
           <div v-for="contacts in datalist" :key="contacts.id" class="grid-item">
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          {{ contacts }}
+              <div class="bg-white rounded-lg shadow-lg overflow-hidden">
               <!-- <img src="https://source.unsplash.com/random/800x600" alt="Card image" class="w-full h-64 object-cover"> -->
               <div class="p-4">
                 <h2 class="text-xl font-medium text-gray-800 mb-2">{{ contacts.attributes.name }}</h2>
@@ -88,7 +90,7 @@ function updateSearch() {
                 <div class="mt-4 flex items-center">
                   <img src="https://source.unsplash.com/random/32x32" alt="Avatar" class="w-8 h-8 rounded-full mr-2">
                   <div>
-                    <p class="text-gray-800 font-medium">{{contacts.attributes.unit}}</p>
+                    <p class="text-gray-800 font-medium">{{contacts.attributes.ref_unit.data}}</p>
                   </div>
                 </div>
               </div>
